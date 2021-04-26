@@ -3,16 +3,16 @@
         <LoggedInNavBar/>
 
         <div class="container" >
-            <div class="heading" style="padding-left:90px">Movies</div>
+            <div class="heading" style="padding-left:90px">Actors</div>
 
-            <NoMoviePlaceholder :canAddMovie="canAddMovie" v-if="!movies.length"/>
+            <NoActorPlaceholder :canAddMovie="canAddActor" v-if="!actors.length"/>
         </div>
     </div>
 </template>
 
 <script>
     import LoggedInNavBar from "../components/LoggedInNavBar";
-    import NoMoviePlaceholder from "../components/NoMoviesPlaceholder";
+    import NoActorPlaceholder from "../components/NoActorsPlaceholder";
     import axios from "axios";
     import { can } from "../auth";
 
@@ -20,15 +20,15 @@
         name: 'Movie',
         components: {
             LoggedInNavBar,
-            NoMoviePlaceholder
+            NoActorPlaceholder
         },
         data(){
             return {
-                movies: []
+                actors: []
             }
         },
         async mounted(){
-            await this.getMovies()
+            await this.getActors()
         },
         methods: {
             logout() {
@@ -39,35 +39,35 @@
                 });
             },
             goToAddMovie(){
-                this.$router.push('/add-movie')
+                this.$router.push('/add-actor')
             },
-            async getMovies() {
+            async getActors() {
                     const token = localStorage.getItem('token')
 
-                    const { data } = await axios.get("http://127.0.0.1:5000/movies", {
+                    const { data } = await axios.get("http://127.0.0.1:5000/actors", {
                         headers: {
                         Authorization: `Bearer ${token}`
                         }
                     });
                     
-                    this.movies = data.movies;
+                    this.actors = data.actors;
             },
             confirm(id) {
                 this.$buefy.dialog.confirm({
-                    message: 'Are you sure you want to delete this movie?',
-                    onConfirm: () => this.deleteMovie(id)
+                    message: 'Are you sure you want to delete this actor?',
+                    onConfirm: () => this.deleteActor(id)
                 })
             },
-            async deleteMovie(id) {
-                axios.delete('http://127.0.0.1:5000/movies/' + id)
+            async deleteActor(id) {
+                axios.delete('http://127.0.0.1:5000/actors/' + id)
                 .then(() => {
-                    this.getMovies()
+                    this.getActors()
                 });
             },
         },
         computed: {
-            canAddMovie(){
-                return can('post:movies')
+            canAddActor(){
+                return can('post:actors')
             }
         }
     }

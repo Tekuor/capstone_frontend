@@ -13,7 +13,7 @@ export const getInstance = () => instance;
 /** Creates an instance of the Auth0 SDK. If one has already been created, it returns that instance */
 export const useAuth0 = ({
   onRedirectCallback = DEFAULT_REDIRECT_CALLBACK,
-  redirectUri = 'http://localhost:8080/movies',
+  redirectUri = 'http://localhost:8080/dashboard',
   ...options
 }) => {
   if (instance) return instance;
@@ -131,3 +131,8 @@ export const Auth0Plugin = {
     Vue.prototype.$auth = useAuth0(options);
   }
 };
+
+export function can(permission) {
+  let payload = JSON.parse(localStorage.getItem('user'))
+  return payload && payload.permissions && payload.permissions.length && payload.permissions.indexOf(permission) >= 0;
+}

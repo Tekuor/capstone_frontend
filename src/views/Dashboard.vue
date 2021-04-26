@@ -23,7 +23,7 @@
                 </div>
             </div>
 
-            <div class="card column is-12 second-div" style="margin-top: 35px; height: 35%;">
+            <div v-if="canAddMovie" class="card column is-12 second-div" style="margin-top: 35px; height: 35%;">
                 <div style="height: 100%; width:100%">
                         <div style="height: 100%">
                             <div class="columns" style="height: 100%">
@@ -40,7 +40,7 @@
                 </div>
             </div>
 
-            <div class="card column is-12 third-div" style="margin-top: 35px; height: 35%;">
+            <div v-if="canAddActor" class="card column is-12 third-div" style="margin-top: 35px; height: 35%;">
                 <div style="height: 100%;">
                     <div style="height: 100%;">
                         <div class="columns" style="height: 100%">
@@ -63,6 +63,7 @@
 
 <script>
 import LoggedInNavBar from "../components/LoggedInNavBar";
+import { can } from "../auth";
 
 export default {
   name: 'Home',
@@ -77,6 +78,14 @@ export default {
     addMovie(){
         this.$router.push('/add-movie')
     }
+  },
+  computed: {
+      canAddMovie(){
+          return can('post:movies')
+      },
+      canAddActor(){
+          return can('post:actors')
+      }
   }
 }
 </script>

@@ -7,21 +7,28 @@
         </template>
 
         <template #end>
-            <b-navbar-item tag="router-link" :to="{ path: '/movies' }" class="nav-items">
+            <b-navbar-item tag="router-link" :to="{ path: '/dashboard' }" class="nav-items">
                 Dashboard
             </b-navbar-item>
-            <b-navbar-item href="#" class="nav-items">
+            <b-navbar-item tag="router-link" :to="{ path: '/movies' }" class="nav-items">
                 Movies
             </b-navbar-item>
-            <b-navbar-item tag="router-link" :to="{ path: '/movies' }" class="nav-items">
+            <b-navbar-item tag="router-link" :to="{ path: '/actors' }" class="nav-items">
                 Actors
             </b-navbar-item>
             <b-navbar-item tag="div">
-                <div class="buttons">
-                    <a class="button is-primary" @click="login">
-                        User Name
-                    </a>
-                </div>
+                <b-dropdown :triggers="['hover']" aria-role="list">
+                    <template #trigger>
+                        <b-button
+                            class="button"
+                            type="is-primary"
+                            :label="name" 
+                            />
+                    </template>
+
+
+                    <b-dropdown-item aria-role="listitem" @click="logout()">Logout</b-dropdown-item>
+                </b-dropdown>
             </b-navbar-item>
         </template>
     </b-navbar>
@@ -41,6 +48,12 @@
             },
             login() {
                 this.$auth.loginWithRedirect();
+            }
+        },
+        computed: {
+            name() {
+                let user = JSON.parse(localStorage.getItem('user'))
+                return user.name
             }
         }
     }

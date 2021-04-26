@@ -4,6 +4,7 @@ import LandingPage from '../views/LandingPage.vue'
 import Movie from "../views/Movie.vue";
 import AddMovie from "../views/AddMovie.vue";
 import Dashboard from "../views/Dashboard.vue"
+import Actor from "../views/Actors";
 
 Vue.use(VueRouter)
 
@@ -23,6 +24,16 @@ const routes = [
     name: 'AddMovie',
     component: AddMovie
   },
+  {
+    path: '/actors',
+    name: 'Actor',
+    component: Actor
+  },
+  // {
+  //   path: '/add-actor',
+  //   name: 'AddActor',
+  //   component: AddActor
+  // },
   {
     path: '/dashboard',
     name: 'Dashboard',
