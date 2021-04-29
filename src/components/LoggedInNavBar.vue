@@ -20,10 +20,12 @@
                 <b-dropdown :triggers="['hover']" aria-role="list">
                     <template #trigger>
                         <b-button
+                            outlined
                             class="button"
                             type="is-primary"
                             :label="name" 
-                            />
+                            icon-right="caret-down"
+                        />
                     </template>
 
 

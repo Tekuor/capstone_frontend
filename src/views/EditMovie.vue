@@ -116,11 +116,12 @@
     import LoggedInNavBar from "../components/LoggedInNavBar";
     import axios from "axios";
     export default {
-        name: 'Movie',
+        name: 'EditMovie',
         components: {
             LoggedInNavBar
         },
         mounted(){
+            this.getActor()
             this.getActors()
         },
         data(){
@@ -137,6 +138,19 @@
             }
         },
         methods: {
+            async getActor() {
+                const token = localStorage.getItem('token')
+                const id = this.$route.params.id
+
+                const { data } = await axios.get(`http://127.0.0.1:5000/movies/${id}`, {
+                    headers: {
+                    Authorization: `Bearer ${token}`
+                    }
+                });
+                    
+                this.form = data.movie;
+                this.form.release_date = new Date(this.form.release_date)
+            },
             async getActors() {
                     const token = localStorage.getItem('token')
 

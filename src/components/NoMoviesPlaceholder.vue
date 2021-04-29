@@ -7,7 +7,7 @@
             <div>No movies added yet</div>
         </div>
         <div class="column has-text-centered is-12" v-if="canAddMovie">
-            <a class="button is-primary" @click="login">
+            <a class="button is-primary" @click="addMovie()">
                 Add new movie
             </a>
         </div>
@@ -37,6 +37,9 @@
             },
             login() {
                 this.$auth.loginWithRedirect();
+            },
+            addMovie(){
+                this.$router.push('/add-movie')
             }
         }
     }

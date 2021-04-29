@@ -9,15 +9,26 @@ $primary-invert: findColorInvert($primary);
 $twitter: #4099FF;
 $twitter-invert: findColorInvert($twitter);
 $background-color: #131313;
+$add: rgba(255, 183, 51, 0.1);
 
 // Lists and maps
-$custom-colors: null !default;
+$custom-colors: (
+    "add": (
+        $add
+    ),
+);
 $custom-shades: null !default;
 
 $navbar-burger-color: $primary;
 $navbar-background-color: $background-color;
 $navbar-item-hover-background-color: $background-color;
 $navbar-dropdown-item-hover-color: $primary;
+// 
+$input-background-color: #131313;
+$label-color: #FFFFFF;
+$input-color: #FFFFFF;
+// $datepicker-item-color: #FFFFFF;
+$input-placeholder-color: #FFFFFF;
 // Setup $colors to use as bulma classes (e.g. 'is-twitter')
 $colors: mergeColorMaps(
     (
