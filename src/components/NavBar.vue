@@ -7,7 +7,7 @@
         </template>
 
         <template #end>
-            <b-navbar-item tag="router-link" :to="{ path: '/movies' }" class="nav-items">
+            <!-- <b-navbar-item tag="router-link" :to="{ path: '/movies' }" class="nav-items">
                 Home
             </b-navbar-item>
             <b-navbar-item href="#" class="nav-items">
@@ -18,7 +18,7 @@
             </b-navbar-item>
             <b-navbar-item href="#" class="nav-items">
                 Contact
-            </b-navbar-item>
+            </b-navbar-item> -->
             <b-navbar-item tag="div">
                 <div class="buttons">
                     <a class="button is-primary" @click="login">
