@@ -5,7 +5,15 @@
         <div class="container" >
             <div class="heading" style="padding-left:90px">Actors</div>
 
-            <NoActorPlaceholder :canAddMovie="canAddActor" v-if="!actors.length"/>
+            <div class="columns is-multiline" style="padding-left:90px; padding-top:40px" v-if="actors.length">
+                <div class="is-2 mr-4" v-for="(actor, index) in actors" :key="index"  @click="editActor(actor.id)">
+                    <div class="movie-card" :style="{ background: 'url(' + actor.image_url + ')'}">
+                    </div>
+                    <p class="pt-4 title">{{actor.name}}</p>
+                    <p class="pb-6 movie-date">{{actor.age}} years</p>
+                </div>
+            </div>
+            <NoActorPlaceholder :canAddActor="canAddActor" v-else/>
         </div>
     </div>
 </template>
@@ -41,6 +49,9 @@
             goToAddMovie(){
                 this.$router.push('/add-actor')
             },
+            editActor(id){
+               this.canEditActor ? this.$router.push(`/edit-actor/${id}`) : ""
+            },
             async getActors() {
                     const token = localStorage.getItem('token')
 
@@ -49,7 +60,6 @@
                         Authorization: `Bearer ${token}`
                         }
                     });
-                    
                     this.actors = data.actors;
             },
             confirm(id) {
@@ -68,6 +78,9 @@
         computed: {
             canAddActor(){
                 return can('post:actors')
+            },
+            canEditActor(){
+                return can('patch:actors')
             }
         }
     }
@@ -82,5 +95,44 @@
         line-height: 40px;
         letter-spacing: 0.1em;
         color: #FFFFFF;
+    }
+
+    .movie-card {
+        box-shadow: 0px 8px 25px 10px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        width: 160px;
+        height: 200px;
+    }
+
+    .movie-card:hover {
+        border: 1px solid #FFB733;
+        cursor: pointer;
+    }
+
+    .title:hover {
+        color: #FFB733;
+        cursor: pointer;
+    }
+
+    .movie-date:hover {
+        color: #FFEDCC;
+        cursor: pointer;
+    }
+
+    .title {
+        font-family: Noto Serif;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 12px;
+        color: #C2C2C2;
+    }
+
+    .movie-date {
+        font-family: Noto Serif;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 12px;
+        line-height: 16px;
+        color: #5C5C5C;
     }
 </style>

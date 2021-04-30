@@ -115,8 +115,9 @@
 <script>
     import LoggedInNavBar from "../components/LoggedInNavBar";
     import axios from "axios";
+    
     export default {
-        name: 'Movie',
+        name: 'AddMovie',
         components: {
             LoggedInNavBar
         },

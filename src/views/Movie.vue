@@ -51,7 +51,7 @@
                 this.$router.push('/add-movie')
             },
             editdMovie(id){
-                this.$router.push(`/edit-movie/${id}`)
+               this.canEditMovie ? this.$router.push(`/edit-movie/${id}`) : ""
             },
             async getMovies() {
                     const token = localStorage.getItem('token')
@@ -83,6 +83,9 @@
         computed: {
             canAddMovie(){
                 return can('post:movies')
+            },
+            canEditMovie(){
+                return can('patch:movies')
             }
         }
     }

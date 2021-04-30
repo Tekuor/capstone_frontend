@@ -6,6 +6,8 @@ import AddMovie from "../views/AddMovie.vue";
 import Dashboard from "../views/Dashboard.vue"
 import Actor from "../views/Actors";
 import EditMovie from "../views/EditMovie.vue";
+import AddActor from "../views/AddActor.vue";
+import EditActor from "../views/EditActor.vue";
 
 Vue.use(VueRouter)
 
@@ -17,32 +19,37 @@ const routes = [
   },
   {
     path: '/movies',
-    name: 'Movie',
+    name: 'movies',
     component: Movie
   },
   {
     path: '/add-movie',
-    name: 'AddMovie',
+    name: 'add-movie',
     component: AddMovie
   },
   {
     path: '/edit-movie/:id',
-    name: 'EditMovie',
+    name: 'edit-movie',
     component: EditMovie
   },
   {
     path: '/actors',
-    name: 'Actor',
+    name: 'actors',
     component: Actor
   },
-  // {
-  //   path: '/add-actor',
-  //   name: 'AddActor',
-  //   component: AddActor
-  // },
+  {
+    path: '/add-actor',
+    name: 'AddActor',
+    component: AddActor
+  },
+  {
+    path: '/edit-actor/:id',
+    name: 'edit-actor',
+    component: EditActor
+  },
   {
     path: '/dashboard',
-    name: 'Dashboard',
+    name: 'dashboard',
     component: Dashboard
   },
   {

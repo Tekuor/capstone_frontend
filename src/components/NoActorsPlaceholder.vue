@@ -7,7 +7,7 @@
             <div>No actors added yet</div>
         </div>
         <div class="column has-text-centered is-12" v-if="canAddActor">
-            <a class="button is-primary" @click="login">
+            <a class="button is-primary" @click="addActor()">
                 Add new actor
             </a>
         </div>
@@ -29,14 +29,8 @@
         components: {
         },
         methods: {
-            // Log the user out
-            logout() {
-                this.$auth.logout({
-                    returnTo: window.location.origin
-                });
-            },
-            login() {
-                this.$auth.loginWithRedirect();
+            addActor(){
+                this.$router.push('/add-actor')
             }
         }
     }

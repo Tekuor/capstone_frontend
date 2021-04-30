@@ -29,6 +29,7 @@ $label-color: #FFFFFF;
 $input-color: #FFFFFF;
 // $datepicker-item-color: #FFFFFF;
 $input-placeholder-color: #FFFFFF;
+$navbar-item-active-color: $primary;
 // Setup $colors to use as bulma classes (e.g. 'is-twitter')
 $colors: mergeColorMaps(
     (

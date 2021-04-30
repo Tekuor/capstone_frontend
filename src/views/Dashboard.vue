@@ -23,7 +23,7 @@
                 </div>
             </div>
 
-            <div v-if="canAddMovie" class="card column is-12 second-div" style="margin-top: 35px; height: 35%;">
+            <div class="card column is-12 second-div" style="margin-top: 35px; height: 35%;">
                 <div style="height: 100%; width:100%">
                         <div style="height: 100%">
                             <div class="columns" style="height: 100%">
@@ -31,16 +31,16 @@
                                    <img  src="../assets/third_image.svg" style="height: 100%"/>
                                 </div>
                                 <div class="column" style="height: 100%; padding-top:30px; padding-left:35px">
-                                    <div class="title-text">Movie list - add movies</div>
+                                    <div class="title-text">Movie list - {{canAddMovie ? `add movies` : `view movies`}}</div>
                                     <div class="description-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>
-                                    <div class="add-text"><a @click="addMovie()">Add Movies</a></div>
+                                    <div class="add-text"><a @click="movies()">{{canAddMovie ? `Add Movies` : `View Movies`}}</a></div>
                                 </div>
                             </div>
                         </div>
                 </div>
             </div>
 
-            <div v-if="canAddActor" class="card column is-12 third-div" style="margin-top: 35px; height: 35%;">
+            <div class="card column is-12 third-div" style="margin-top: 35px; height: 35%;">
                 <div style="height: 100%;">
                     <div style="height: 100%;">
                         <div class="columns" style="height: 100%">
@@ -48,9 +48,9 @@
                                 <img  src="../assets/fourth_image.svg" style="height: 100%"/>
                             </div>
                             <div class="column" style="height: 100%; padding-top:30px; padding-left:35px">
-                                <div class="title-text">Actors list - add actors</div>
+                                <div class="title-text">Actors list - {{canAddActor ? `add actors` : `view actors`}}</div>
                                 <div class="description-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>
-                                <div class="add-text">Add Actors</div>
+                                <div class="add-text"><a @click="actors()">{{canAddActor ? `Add Actors` : `View Actors`}}</a></div>
                             </div>
                         </div>    
                     </div>
@@ -75,8 +75,11 @@ export default {
     login() {
       this.$auth.loginWithRedirect();
     },
-    addMovie(){
-        this.$router.push('/add-movie')
+    movies(){
+        this.canAddMovie ? this.$router.push('/add-movie') : this.$router.push('/movies')
+    },
+    actors(){
+        this.canAddActor ? this.$router.push('/add-actor') : this.$router.push('/actors')
     }
   },
   computed: {
@@ -84,6 +87,7 @@ export default {
           return can('post:movies')
       },
       canAddActor(){
+          console.log("helloo", can('post:actors'))
           return can('post:actors')
       }
   }

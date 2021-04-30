@@ -1,37 +1,37 @@
 <template>
     <div>
         <LoggedInNavBar/>
-        <div class="container columns pt-6">
-            <div class="column is-12">
-                <div class="px-4 column is-8">
-                <b-field horizontal label="Title" class="pb-6">
-                    <b-input v-model="form.title"></b-input>
-                </b-field>
+      <div class="container pt-6">
+        <div class="columns">
+            <div class="column">
+                <div>
+                    <b-field horizontal label="Name" class="pb-6">
+                        <b-input v-model="form.name"></b-input>
+                    </b-field>
 
-                <b-field horizontal label="Image Url" class="pb-6">
-                    <b-input v-model="form.image_url"></b-input>
-                </b-field>
+                    <b-field horizontal label="Age" class="pb-6">
+                        <b-input v-model="form.age"></b-input>
+                    </b-field>
 
-                <b-field horizontal label="Release Date" class="pb-5" >
-                    <b-datetimepicker
-                        v-model="form.release_date"
-                        placeholder="Type or select a date..."
-                        icon="calendar-today"
-                        :locale="undefined"
-                        editable>
-                    </b-datetimepicker>
-                </b-field>
+                    <b-field horizontal label="Gender" class="pb-6">
+                        <b-input v-model="form.gender"></b-input>
+                    </b-field>
 
-                <b-field horizontal label="Description">
-                    <b-input v-model="form.description" maxlength="200" type="textarea"></b-input>
-                </b-field>
+                    <b-field horizontal label="Image Url" class="pb-6">
+                        <b-input v-model="form.image_url"></b-input>
+                    </b-field>
 
-                
-                <b-button @click="editMovie()" type="is-primary" class=" is-pulled-right button">Save</b-button>
-                <b-button v-if="canDeleteMovie" @click="deleteMovie()" type="is-danger" class=" is-pulled-right button mx-4">Delete</b-button>
+                    <b-button @click="editActor()" type="is-primary" class=" is-pulled-right button">Save</b-button>
+                    <b-button v-if="canDeleteActor" @click="deleteActor()" type="is-danger" class=" is-pulled-right button mx-4">Delete</b-button>
+                </div>
+            </div>
+            <div class="column">
+                <div style="padding-left:100px">
+                    <img  src="../assets/fifth_image.svg" style="height: 100%"/>
                 </div>
             </div>
         </div>
+      </div>
     </div>
 </template>
 
@@ -39,97 +39,72 @@
     import LoggedInNavBar from "../components/LoggedInNavBar";
     import axios from "axios";
     import { can } from "../auth";
-
+    
     export default {
-        name: 'EditMovie',
+        name: 'AddMovie',
         components: {
             LoggedInNavBar
         },
         mounted(){
-            this.getMovie()
-            this.getActors()
+            this.getActor()
         },
         data(){
             return {
                 form: {
-                    title: '',
+                    name: '',
                     image_url: '',
-                    release_date: new Date(),
-                    description:""
-                },
-                actors: []
+                    gender: '',
+                    age:""
+                }
             }
         },
         methods: {
-            async getMovie() {
+            async getActor() {
                 const token = localStorage.getItem('token')
                 const id = this.$route.params.id
 
-                const { data } = await axios.get(`http://127.0.0.1:5000/movies/${id}`, {
+                const { data } = await axios.get(`http://127.0.0.1:5000/actors/${id}`, {
                     headers: {
                     Authorization: `Bearer ${token}`
                     }
                 });
                     
-                this.form = data.movie;
-                this.form.release_date = new Date(this.form.release_date)
+                this.form = data.actor;
             },
-            async getActors() {
-                    const token = localStorage.getItem('token')
-
-                    const { data } = await axios.get("http://127.0.0.1:5000/actors", {
-                        headers: {
-                        Authorization: `Bearer ${token}`
-                        }
-                    });
-                    
-                    this.actors = data.actors;
-            },
-            async editMovie() {
+            async editActor() {
                 try{
                     const token = localStorage.getItem('token')
                     const id = this.$route.params.id
-                    await axios.patch(`http://127.0.0.1:5000/movies/${id}`, this.form, {
+                    await axios.patch(`http://127.0.0.1:5000/actors/${id}`, this.form, {
                         headers: {
                         Authorization: `Bearer ${token}`
                         }
                     });
 
-                    this.$router.push('/movies')
+                    this.$router.push('/actors')
                 }catch(e){
                     console.log(e)
                 }
             },
-            async deleteMovie() {
+            async deleteActor() {
                 try{
                     const token = localStorage.getItem('token')
                     const id = this.$route.params.id
-                    await axios.delete(`http://127.0.0.1:5000/movies/${id}`, {
+                    await axios.delete(`http://127.0.0.1:5000/actors/${id}`, {
                         headers: {
                         Authorization: `Bearer ${token}`
                         }
                     });
 
-                    this.$router.push('/movies')
+                    this.$router.push('/actors')
                 }catch(e){
                     console.log(e)
                 }
             },
-            addRole(){
-                const data = {
-                    actor_id: "",
-                    role: ""
-                }
-
-                this.form.roles.push(data)
-            },
-            deleteRole(index){
-                this.form.roles.splice(index, 1);
-            }
         },
         computed: {
-            canDeleteMovie(){
-                return can('delete:movies')
+            canDeleteActor(){
+                return can('delete:actors')
             }
         }
     }

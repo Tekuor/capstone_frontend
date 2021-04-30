@@ -7,13 +7,13 @@
         </template>
 
         <template #end>
-            <b-navbar-item tag="router-link" :to="{ path: '/dashboard' }" class="nav-items">
+            <b-navbar-item tag="router-link" :to="{ path: '/dashboard' }" class="nav-items" :active="currentRoute.includes('dashboard')">
                 Dashboard
             </b-navbar-item>
-            <b-navbar-item tag="router-link" :to="{ path: '/movies' }" class="nav-items">
+            <b-navbar-item tag="router-link" :to="{ path: '/movies' }" class="nav-items" :active="currentRoute.includes('movies')">
                 Movies
             </b-navbar-item>
-            <b-navbar-item tag="router-link" :to="{ path: '/actors' }" class="nav-items">
+            <b-navbar-item tag="router-link" :to="{ path: '/actors' }" class="nav-items" :active="currentRoute.includes('actors')">
                 Actors
             </b-navbar-item>
             <b-navbar-item tag="div">
@@ -44,6 +44,8 @@
         methods: {
             // Log the user out
             logout() {
+                localStorage.removeItem('token')
+                localStorage.removeItem('user')
                 this.$auth.logout({
                     returnTo: window.location.origin
                 });
@@ -56,6 +58,9 @@
             name() {
                 let user = JSON.parse(localStorage.getItem('user'))
                 return user.name
+            },
+            currentRoute(){
+                return this.$route.name
             }
         }
     }
