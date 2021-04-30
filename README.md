@@ -1,5 +1,5 @@
-# frontend
-
+# Capstone frontend
+Frontend for the udacity capstone project. https://github.com/Tekuor/capstone#casting-agency
 ## Project setup
 ```
 npm install
