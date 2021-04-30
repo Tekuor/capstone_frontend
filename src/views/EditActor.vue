@@ -2,7 +2,7 @@
     <div>
         <LoggedInNavBar/>
       <div class="container pt-6">
-        <div class="columns">
+        <div class="columns is-desktop is-vcentered">
             <div class="column">
                 <div>
                     <b-field horizontal label="Name" class="pb-6">
