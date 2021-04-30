@@ -38,7 +38,7 @@
 <script>
     import LoggedInNavBar from "../components/LoggedInNavBar";
     import axios from "axios";
-    
+
     export default {
         name: 'Movie',
         components: {
@@ -59,7 +59,7 @@
                 try{
                     const token = localStorage.getItem('token')
 
-                    await axios.post("http://127.0.0.1:5000/actors", this.form, {
+                    await axios.post("https://casting-agency-pro.herokuapp.com/actors", this.form, {
                         headers: {
                         Authorization: `Bearer ${token}`
                         }

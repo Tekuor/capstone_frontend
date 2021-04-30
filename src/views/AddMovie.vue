@@ -141,7 +141,7 @@
             async getActors() {
                     const token = localStorage.getItem('token')
 
-                    const { data } = await axios.get("http://127.0.0.1:5000/actors", {
+                    const { data } = await axios.get("https://casting-agency-pro.herokuapp.com/actors", {
                         headers: {
                         Authorization: `Bearer ${token}`
                         }
@@ -165,7 +165,7 @@
                 try{
                     const token = localStorage.getItem('token')
 
-                    await axios.post("http://127.0.0.1:5000/movies", this.form, {
+                    await axios.post("https://casting-agency-pro.herokuapp.com/movies", this.form, {
                         headers: {
                         Authorization: `Bearer ${token}`
                         }

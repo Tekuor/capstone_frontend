@@ -56,7 +56,7 @@
             async getMovies() {
                     const token = localStorage.getItem('token')
 
-                    const { data } = await axios.get("http://127.0.0.1:5000/movies", {
+                    const { data } = await axios.get("https://casting-agency-pro.herokuapp.com/movies", {
                         headers: {
                         Authorization: `Bearer ${token}`
                         }
@@ -71,7 +71,7 @@
                 })
             },
             async deleteMovie(id) {
-                axios.delete('http://127.0.0.1:5000/movies/' + id)
+                axios.delete('https://casting-agency-pro.herokuapp.com/movies/' + id)
                 .then(() => {
                     this.getMovies()
                 });

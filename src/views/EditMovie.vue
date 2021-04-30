@@ -65,7 +65,7 @@
                 const token = localStorage.getItem('token')
                 const id = this.$route.params.id
 
-                const { data } = await axios.get(`http://127.0.0.1:5000/movies/${id}`, {
+                const { data } = await axios.get(`https://casting-agency-pro.herokuapp.com/movies/${id}`, {
                     headers: {
                     Authorization: `Bearer ${token}`
                     }
@@ -77,7 +77,7 @@
             async getActors() {
                     const token = localStorage.getItem('token')
 
-                    const { data } = await axios.get("http://127.0.0.1:5000/actors", {
+                    const { data } = await axios.get("https://casting-agency-pro.herokuapp.com/actors", {
                         headers: {
                         Authorization: `Bearer ${token}`
                         }
@@ -89,7 +89,7 @@
                 try{
                     const token = localStorage.getItem('token')
                     const id = this.$route.params.id
-                    await axios.patch(`http://127.0.0.1:5000/movies/${id}`, this.form, {
+                    await axios.patch(`https://casting-agency-pro.herokuapp.com/${id}`, this.form, {
                         headers: {
                         Authorization: `Bearer ${token}`
                         }
@@ -104,7 +104,7 @@
                 try{
                     const token = localStorage.getItem('token')
                     const id = this.$route.params.id
-                    await axios.delete(`http://127.0.0.1:5000/movies/${id}`, {
+                    await axios.delete(`https://casting-agency-pro.herokuapp.com/${id}`, {
                         headers: {
                         Authorization: `Bearer ${token}`
                         }

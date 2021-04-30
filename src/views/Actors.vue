@@ -55,7 +55,7 @@
             async getActors() {
                     const token = localStorage.getItem('token')
 
-                    const { data } = await axios.get("http://127.0.0.1:5000/actors", {
+                    const { data } = await axios.get("https://casting-agency-pro.herokuapp.com/actors", {
                         headers: {
                         Authorization: `Bearer ${token}`
                         }
@@ -69,7 +69,7 @@
                 })
             },
             async deleteActor(id) {
-                axios.delete('http://127.0.0.1:5000/actors/' + id)
+                axios.delete('https://casting-agency-pro.herokuapp.com/' + id)
                 .then(() => {
                     this.getActors()
                 });
