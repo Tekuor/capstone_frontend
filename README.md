@@ -20,5 +20,8 @@ npm run build
 npm run lint
 ```
 
+### Deployment
+The project is deployed on heroku and can be accessed with this link https://casting-agency21.herokuapp.com
+
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
