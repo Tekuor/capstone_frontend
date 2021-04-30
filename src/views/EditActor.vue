@@ -1,7 +1,7 @@
 <template>
     <div style="height: 100%">
         <LoggedInNavBar/>
-      <div class="container pt-6" style="height: 100%">
+      <div class="container" style="height: 100%">
         <div class="columns is-desktop is-vcentered" style="height: 100%">
             <div class="column">
                 <div>
