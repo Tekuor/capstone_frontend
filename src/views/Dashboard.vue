@@ -11,9 +11,9 @@
                             <div class="column is-3" style="height: 100%; padding-left: 40px; padding-top:20px">
                                 <img  src="../assets/first_image.svg" style="height: 90%"/>
                             </div>
-                            <div class="column has-text-centered is-6" style="height: 100%; padding-top:40px">
+                            <div class="column has-text-centered is-6" style="height: 100%; padding-top:70px">
                                 <div id="casting">Casting made easy</div>
-                                <div id="casting-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>
+                                <div id="casting-description">Easily manage actors and movies and assign roles to the actors!</div>
                             </div>
                             <div class="column is-4 px-4" style="height: 100%;padding-top:20px">
                                 <img  src="../assets/second_image.svg" style="height: 90%"/>
@@ -32,7 +32,7 @@
                                 </div>
                                 <div class="column" style="height: 100%; padding-top:30px; padding-left:35px">
                                     <div class="title-text">Movie list - {{canAddMovie ? `add movies` : `view movies`}}</div>
-                                    <div class="description-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>
+                                    <div class="description-text">{{canAddMovie ? `Add movies to assign roles to actors` : `View the list of movies added`}}</div>
                                     <div class="add-text"><a @click="movies()">{{canAddMovie ? `Add Movies` : `View Movies`}}</a></div>
                                 </div>
                             </div>
@@ -49,7 +49,7 @@
                             </div>
                             <div class="column" style="height: 100%; padding-top:30px; padding-left:35px">
                                 <div class="title-text">Actors list - {{canAddActor ? `add actors` : `view actors`}}</div>
-                                <div class="description-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>
+                                <div class="description-text">{{canAddActor ? `Add actors to assign their dream movie roles to them` : `View the list of actors added`}}</div>
                                 <div class="add-text"><a @click="actors()">{{canAddActor ? `Add Actors` : `View Actors`}}</a></div>
                             </div>
                         </div>    
