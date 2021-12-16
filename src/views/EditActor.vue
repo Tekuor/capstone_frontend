@@ -1,8 +1,8 @@
 <template>
-    <div>
+    <div style="height: 100%">
         <LoggedInNavBar/>
-      <div class="container pt-6">
-        <div class="columns">
+      <div class="container" style="height: 100%">
+        <div class="columns is-desktop is-vcentered" style="height: 100%">
             <div class="column">
                 <div>
                     <b-field horizontal label="Name" class="pb-6">
