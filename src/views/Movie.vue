@@ -2,21 +2,31 @@
   <div class="h-full">
     <LoggedInNavBar />
 
-    <div class="container h-full">
-      <h3 class="heading" style="padding-left:90px">Movies</h3>
+    <div class="container h-full pt-4">
+      <div class="flex flex-row">
+        <h3 class="heading">Movies</h3>
+        <div class="w-full" v-if="movies.length">
+          <a
+            @click="goToAddMovie()"
+            class="float-right pr-6"
+            style="color: #ffb733"
+            >Add Movies</a
+          >
+        </div>
+      </div>
 
       <div v-if="loading" class="h-full flex justify-center items-center">
         <LoaderComponent />
       </div>
 
-      <div v-else>
+      <div class="flex flex-col items-center" v-else>
         <div
           class="columns is-multiline"
-          style="padding-left:90px; padding-top:40px"
+          style="padding-top:40px"
           v-if="movies.length"
         >
           <div
-            class="is-2 mr-4"
+            class="is-2 mr-8"
             v-for="(movie, index) in movies"
             :key="index"
             @click="editdMovie(movie.id)"
@@ -132,8 +142,6 @@ export default {
   font-style: normal;
   font-weight: normal;
   font-size: 16px;
-  line-height: 40px;
-  letter-spacing: 0.1em;
   color: #ffffff;
 }
 
