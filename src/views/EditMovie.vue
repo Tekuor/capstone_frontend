@@ -1,49 +1,56 @@
 <template>
-  <div>
+  <div class="h-full">
     <LoggedInNavBar />
-    <div class="container columns pt-6">
-      <div class="column is-12">
-        <div class="px-4 column is-8">
-          <b-field horizontal label="Title" class="pb-6">
-            <b-input v-model="form.title"></b-input>
-          </b-field>
 
-          <b-field horizontal label="Image Url" class="pb-6">
-            <b-input v-model="form.image_url"></b-input>
-          </b-field>
+    <div v-if="loading" class="h-full flex justify-center items-center">
+      <LoaderComponent />
+    </div>
 
-          <b-field horizontal label="Release Date" class="pb-5">
-            <b-datetimepicker
-              v-model="form.release_date"
-              placeholder="Type or select a date..."
-              icon="calendar-today"
-              :locale="undefined"
-              editable
+    <div v-else>
+      <div class="container columns pt-6">
+        <div class="column is-12">
+          <div class="px-4 column is-8">
+            <b-field horizontal label="Title" class="pb-6">
+              <b-input v-model="form.title"></b-input>
+            </b-field>
+
+            <b-field horizontal label="Image Url" class="pb-6">
+              <b-input v-model="form.image_url"></b-input>
+            </b-field>
+
+            <b-field horizontal label="Release Date" class="pb-5">
+              <b-datetimepicker
+                v-model="form.release_date"
+                placeholder="Type or select a date..."
+                icon="calendar-today"
+                :locale="undefined"
+                editable
+              >
+              </b-datetimepicker>
+            </b-field>
+
+            <b-field horizontal label="Description">
+              <b-input
+                v-model="form.description"
+                maxlength="200"
+                type="textarea"
+              ></b-input>
+            </b-field>
+
+            <b-button
+              @click="editMovie()"
+              type="is-primary"
+              class=" is-pulled-right button"
+              >Save</b-button
             >
-            </b-datetimepicker>
-          </b-field>
-
-          <b-field horizontal label="Description">
-            <b-input
-              v-model="form.description"
-              maxlength="200"
-              type="textarea"
-            ></b-input>
-          </b-field>
-
-          <b-button
-            @click="editMovie()"
-            type="is-primary"
-            class=" is-pulled-right button"
-            >Save</b-button
-          >
-          <b-button
-            v-if="canDeleteMovie"
-            @click="deleteMovie()"
-            type="is-danger"
-            class=" is-pulled-right button mx-4"
-            >Delete</b-button
-          >
+            <b-button
+              v-if="canDeleteMovie"
+              @click="deleteMovie()"
+              type="is-danger"
+              class=" is-pulled-right button mx-4"
+              >Delete</b-button
+            >
+          </div>
         </div>
       </div>
     </div>
@@ -52,6 +59,7 @@
 
 <script>
 import LoggedInNavBar from "../components/LoggedInNavBar";
+import LoaderComponent from "../components/LoaderComponent";
 import axios from "axios";
 import { can } from "../auth";
 
@@ -59,6 +67,7 @@ export default {
   name: "EditMovie",
   components: {
     LoggedInNavBar,
+    LoaderComponent,
   },
   mounted() {
     this.getMovie();
@@ -73,24 +82,30 @@ export default {
         description: "",
       },
       actors: [],
+      loading: false,
     };
   },
   methods: {
     async getMovie() {
-      const token = localStorage.getItem("token");
-      const id = this.$route.params.id;
+      try {
+        this.loading = true;
+        const token = localStorage.getItem("token");
+        const id = this.$route.params.id;
 
-      const { data } = await axios.get(
-        `https://casting-agency-pro.herokuapp.com/movies/${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+        const { data } = await axios.get(
+          `https://casting-agency-pro.herokuapp.com/movies/${id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
-      this.form = data.movie;
-      this.form.release_date = new Date(this.form.release_date);
+        this.form = data.movie;
+        this.form.release_date = new Date(this.form.release_date);
+      } finally {
+        this.loading = false;
+      }
     },
     async getActors() {
       const token = localStorage.getItem("token");
@@ -127,18 +142,24 @@ export default {
     },
     async deleteMovie() {
       try {
-        const token = localStorage.getItem("token");
-        const id = this.$route.params.id;
-        await axios.delete(
-          `https://casting-agency-pro.herokuapp.com/movies/${id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        try {
+          this.loading = true;
 
-        this.$router.push("/movies");
+          const token = localStorage.getItem("token");
+          const id = this.$route.params.id;
+          await axios.delete(
+            `https://casting-agency-pro.herokuapp.com/movies/${id}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+
+          this.$router.push("/movies");
+        } finally {
+          this.loading = false;
+        }
       } catch (e) {
         console.log(e);
       }
