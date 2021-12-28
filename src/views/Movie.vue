@@ -23,7 +23,7 @@
           >
             <div
               class="movie-card"
-              :style="{ background: 'url(' + movie.image_url + ')' }"
+              :style="{ 'background-image': 'url(' + movie.image_url + ')' }"
             ></div>
             <p class="pt-4 title">{{ movie.title }}</p>
             <p class="pb-6 movie-date">{{ formatDate(movie.release_date) }}</p>
@@ -142,6 +142,10 @@ export default {
   border-radius: 8px;
   width: 160px;
   height: 200px;
+  background-size: auto;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 .movie-card:hover {

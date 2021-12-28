@@ -34,7 +34,7 @@
               <div
                 id="image-div"
                 class="mx-4 mt-4"
-                :style="{ background: 'url(' + form.image_url + ')' }"
+                :style="{ 'background-image': 'url(' + form.image_url + ')' }"
               ></div>
               <div id="movie-content" class="px-4 pt-6">
                 <div>
@@ -296,10 +296,9 @@ select.is-empty select {
 
 #movie-display {
   width: 270px;
-  height: 465px;
+  min-height: 465px;
   left: 0px;
   top: 172px;
-
   background: #000000;
   border-radius: 8px;
 }
@@ -308,6 +307,10 @@ select.is-empty select {
   width: 216px;
   height: 200px;
   border-radius: 8px;
+  background-size: auto;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 .movie-headings {
