@@ -45,7 +45,9 @@
                   <div class="movie-text pb-4">{{ form.release_date }}</div>
 
                   <div class="movie-headings">Description</div>
-                  <div class="movie-text">{{ form.description }}</div>
+                  <div class="movie-text break-words">
+                    {{ form.description }}
+                  </div>
                 </div>
               </div>
             </div>
