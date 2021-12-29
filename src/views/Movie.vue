@@ -31,10 +31,17 @@
             :key="index"
             @click="editdMovie(movie.id)"
           >
-            <div
-              class="movie-card"
-              :style="{ 'background-image': 'url(' + movie.image_url + ')' }"
-            ></div>
+            <b-tooltip
+              :label="movie.description"
+              multilined
+              size="is-large"
+              position="is-bottom"
+            >
+              <div
+                class="movie-card"
+                :style="{ 'background-image': 'url(' + movie.image_url + ')' }"
+              ></div>
+            </b-tooltip>
             <p class="pt-4 title">{{ movie.title }}</p>
             <p class="pb-6 movie-date">{{ formatDate(movie.release_date) }}</p>
           </div>
