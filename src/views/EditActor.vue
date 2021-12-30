@@ -1,7 +1,12 @@
 <template>
   <div style="height: 100%">
     <LoggedInNavBar />
-    <div class="container" style="height: 100%">
+
+    <div v-if="loading" class="h-full flex justify-center items-center">
+      <LoaderComponent />
+    </div>
+
+    <div class="container" style="height: 100%" v-else>
       <div class="columns is-desktop is-vcentered" style="height: 100%">
         <div class="column">
           <div>
@@ -63,11 +68,13 @@
 import LoggedInNavBar from "../components/LoggedInNavBar";
 import axios from "axios";
 import { can } from "../auth";
+import LoaderComponent from "../components/LoaderComponent";
 
 export default {
   name: "AddMovie",
   components: {
     LoggedInNavBar,
+    LoaderComponent,
   },
   mounted() {
     this.getActor();
@@ -81,23 +88,29 @@ export default {
         age: "",
         about: "",
       },
+      loading: false,
     };
   },
   methods: {
     async getActor() {
-      const token = localStorage.getItem("token");
-      const id = this.$route.params.id;
+      try {
+        this.loading = true;
+        const token = localStorage.getItem("token");
+        const id = this.$route.params.id;
 
-      const { data } = await axios.get(
-        `https://casting-agency-pro.herokuapp.com/actors/${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+        const { data } = await axios.get(
+          `https://casting-agency-pro.herokuapp.com/actors/${id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
-      this.form = data.actor;
+        this.form = data.actor;
+      } finally {
+        this.loading = false;
+      }
     },
     async editActor() {
       try {
