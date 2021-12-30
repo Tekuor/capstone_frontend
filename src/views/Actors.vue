@@ -34,7 +34,7 @@
         <LoaderComponent />
       </div>
 
-      <div class="mx-auto" v-else>
+      <div class="flex flex-col items-center lg:items-start" v-else>
         <div
           class="columns is-multiline"
           style="padding-top:40px"
@@ -67,10 +67,12 @@
             <p class="pb-6 movie-date">{{ actor.age }} years</p>
           </div>
         </div>
-
-        <div class="h-auto flex justify-center items-center" v-else>
-          <NoActorPlaceholder :canAddActor="canAddActor" />
-        </div>
+      </div>
+      <div
+        class="h-auto flex justify-center items-center"
+        v-if="!actors.length"
+      >
+        <NoActorPlaceholder :canAddActor="canAddActor" />
       </div>
     </div>
   </div>

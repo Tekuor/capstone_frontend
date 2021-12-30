@@ -34,7 +34,7 @@
         <LoaderComponent />
       </div>
 
-      <div class="mx-auto" v-else>
+      <div class="flex flex-col items-center lg:items-start" v-else>
         <div
           class="columns is-multiline"
           style="padding-top:40px"
@@ -67,10 +67,13 @@
             <p class="pb-6 movie-date">{{ formatDate(movie.release_date) }}</p>
           </div>
         </div>
+      </div>
 
-        <div class="h-auto flex justify-center items-center" v-else>
-          <NoMoviePlaceholder :canAddMovie="canAddMovie" />
-        </div>
+      <div
+        class="h-auto flex justify-center items-center"
+        v-if="!movies.length"
+      >
+        <NoMoviePlaceholder :canAddMovie="canAddMovie" />
       </div>
     </div>
   </div>
