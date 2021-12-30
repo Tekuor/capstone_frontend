@@ -1,138 +1,187 @@
 <template>
-    <div>
-        <LoggedInNavBar/>
+  <div class="h-full">
+    <LoggedInNavBar />
 
-        <div class="container" >
-            <div class="heading" style="padding-left:90px">Actors</div>
-
-            <div class="columns is-multiline" style="padding-left:90px; padding-top:40px" v-if="actors.length">
-                <div class="is-2 mr-4" v-for="(actor, index) in actors" :key="index"  @click="editActor(actor.id)">
-                    <div class="movie-card" :style="{ background: 'url(' + actor.image_url + ')'}">
-                    </div>
-                    <p class="pt-4 title">{{actor.name}}</p>
-                    <p class="pb-6 movie-date">{{actor.age}} years</p>
-                </div>
-            </div>
-            <NoActorPlaceholder :canAddActor="canAddActor" v-else/>
+    <div class="container h-full pt-4">
+      <div class="flex flex-row">
+        <h3 class="heading">Actors</h3>
+        <div class="w-full" v-if="actors.length">
+          <a
+            @click="goToAddMovie()"
+            class="float-right pr-6"
+            style="color: #ffb733"
+            >Add Actors</a
+          >
         </div>
+      </div>
+
+      <div v-if="loading" class="h-full flex justify-center items-center">
+        <LoaderComponent />
+      </div>
+
+      <div class="flex flex-col items-center" v-else>
+        <div
+          class="columns is-multiline"
+          style="padding-top:40px"
+          v-if="actors.length"
+        >
+          <div
+            class="is-2 mr-8"
+            v-for="(actor, index) in actors"
+            :key="index"
+            @click="editActor(actor.id)"
+          >
+            <b-tooltip
+              :label="actor.about"
+              multilined
+              size="is-large"
+              position="is-bottom"
+            >
+              <div
+                class="movie-card"
+                :style="{ 'background-image': 'url(' + actor.image_url + ')' }"
+              ></div>
+            </b-tooltip>
+            <p class="pt-4 title">{{ actor.name }}</p>
+            <p class="pb-6 movie-date">{{ actor.age }} years</p>
+          </div>
+        </div>
+
+        <div class="h-auto" v-else>
+          <NoActorPlaceholder :canAddActor="canAddActor" />
+        </div>
+      </div>
     </div>
+  </div>
 </template>
 
 <script>
-    import LoggedInNavBar from "../components/LoggedInNavBar";
-    import NoActorPlaceholder from "../components/NoActorsPlaceholder";
-    import axios from "axios";
-    import { can } from "../auth";
+import LoggedInNavBar from "../components/LoggedInNavBar";
+import NoActorPlaceholder from "../components/NoActorsPlaceholder";
+import axios from "axios";
+import { can } from "../auth";
+import LoaderComponent from "../components/LoaderComponent";
 
-    export default {
-        name: 'Movie',
-        components: {
-            LoggedInNavBar,
-            NoActorPlaceholder
-        },
-        data(){
-            return {
-                actors: []
-            }
-        },
-        async mounted(){
-            await this.getActors()
-        },
-        methods: {
-            logout() {
-                localStorage.removeItem('token')
-                localStorage.removeItem('user')
-                this.$auth.logout({
-                    returnTo: window.location.origin
-                });
-            },
-            goToAddMovie(){
-                this.$router.push('/add-actor')
-            },
-            editActor(id){
-               this.canEditActor ? this.$router.push(`/edit-actor/${id}`) : ""
-            },
-            async getActors() {
-                    const token = localStorage.getItem('token')
+export default {
+  name: "Movie",
+  components: {
+    LoggedInNavBar,
+    NoActorPlaceholder,
+    LoaderComponent,
+  },
+  data() {
+    return {
+      actors: [],
+      loading: false,
+    };
+  },
+  async mounted() {
+    await this.getActors();
+  },
+  methods: {
+    logout() {
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      this.$auth.logout({
+        returnTo: window.location.origin,
+      });
+    },
+    goToAddMovie() {
+      this.$router.push("/add-actor");
+    },
+    editActor(id) {
+      this.canEditActor ? this.$router.push(`/edit-actor/${id}`) : "";
+    },
+    async getActors() {
+      try {
+        this.loading = true;
+        const token = localStorage.getItem("token");
 
-                    const { data } = await axios.get("https://casting-agency-pro.herokuapp.com/actors", {
-                        headers: {
-                        Authorization: `Bearer ${token}`
-                        }
-                    });
-                    this.actors = data.actors;
+        const { data } = await axios.get(
+          "https://casting-agency-pro.herokuapp.com/actors",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
             },
-            confirm(id) {
-                this.$buefy.dialog.confirm({
-                    message: 'Are you sure you want to delete this actor?',
-                    onConfirm: () => this.deleteActor(id)
-                })
-            },
-            async deleteActor(id) {
-                axios.delete('https://casting-agency-pro.herokuapp.com/' + id)
-                .then(() => {
-                    this.getActors()
-                });
-            },
-        },
-        computed: {
-            canAddActor(){
-                return can('post:actors')
-            },
-            canEditActor(){
-                return can('patch:actors')
-            }
-        }
-    }
+          }
+        );
+        this.actors = data.actors;
+      } finally {
+        this.loading = false;
+      }
+    },
+    confirm(id) {
+      this.$buefy.dialog.confirm({
+        message: "Are you sure you want to delete this actor?",
+        onConfirm: () => this.deleteActor(id),
+      });
+    },
+    async deleteActor(id) {
+      axios
+        .delete("https://casting-agency-pro.herokuapp.com/" + id)
+        .then(() => {
+          this.getActors();
+        });
+    },
+  },
+  computed: {
+    canAddActor() {
+      return can("post:actors");
+    },
+    canEditActor() {
+      return can("patch:actors");
+    },
+  },
+};
 </script>
 
 <style scoped>
-    .heading {
-        font-family: Noto Serif;
-        font-style: normal;
-        font-weight: normal;
-        font-size: 16px;
-        line-height: 40px;
-        letter-spacing: 0.1em;
-        color: #FFFFFF;
-    }
+.heading {
+  font-family: Noto Serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 40px;
+  letter-spacing: 0.1em;
+  color: #ffffff;
+}
 
-    .movie-card {
-        box-shadow: 0px 8px 25px 10px rgba(0, 0, 0, 0.1);
-        border-radius: 8px;
-        width: 160px;
-        height: 200px;
-    }
+.movie-card {
+  box-shadow: 0px 8px 25px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  width: 160px;
+  height: 200px;
+}
 
-    .movie-card:hover {
-        border: 1px solid #FFB733;
-        cursor: pointer;
-    }
+.movie-card:hover {
+  border: 1px solid #ffb733;
+  cursor: pointer;
+}
 
-    .title:hover {
-        color: #FFB733;
-        cursor: pointer;
-    }
+.title:hover {
+  color: #ffb733;
+  cursor: pointer;
+}
 
-    .movie-date:hover {
-        color: #FFEDCC;
-        cursor: pointer;
-    }
+.movie-date:hover {
+  color: #ffedcc;
+  cursor: pointer;
+}
 
-    .title {
-        font-family: Noto Serif;
-        font-style: normal;
-        font-weight: normal;
-        font-size: 12px;
-        color: #C2C2C2;
-    }
+.title {
+  font-family: Noto Serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  color: #c2c2c2;
+}
 
-    .movie-date {
-        font-family: Noto Serif;
-        font-style: normal;
-        font-weight: normal;
-        font-size: 12px;
-        line-height: 16px;
-        color: #5C5C5C;
-    }
+.movie-date {
+  font-family: Noto Serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 16px;
+  color: #5c5c5c;
+}
 </style>
