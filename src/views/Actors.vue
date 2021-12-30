@@ -15,11 +15,26 @@
         </div>
       </div>
 
+      <div class="grid grid-cols-1 lg:grid-cols-4">
+        <b-field>
+          <b-input
+            placeholder="Search..."
+            type="search"
+            icon="magnify"
+            icon-clickable
+            @icon-click="search"
+            @input="search"
+            v-model="searchTerm"
+          >
+          </b-input>
+        </b-field>
+      </div>
+
       <div v-if="loading" class="h-full flex justify-center items-center">
         <LoaderComponent />
       </div>
 
-      <div class="flex flex-col" v-else>
+      <div class="mx-auto" v-else>
         <div
           class="columns is-multiline"
           style="padding-top:40px"
@@ -73,6 +88,7 @@ export default {
     return {
       actors: [],
       loading: false,
+      searchTerm: "",
     };
   },
   async mounted() {
@@ -108,6 +124,25 @@ export default {
         this.actors = data.actors;
       } finally {
         this.loading = false;
+      }
+    },
+    async search() {
+      if (this.searchTerm.length >= 3) {
+        const token = localStorage.getItem("token");
+
+        const { data } = await axios.post(
+          "https://casting-agency-pro.herokuapp.com/actors/search",
+          { searchTerm: this.searchTerm },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        this.actors = data.actors;
+      } else if (!this.searchTerm.length) {
+        await this.getActors();
       }
     },
     confirm(id) {
