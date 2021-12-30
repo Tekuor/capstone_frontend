@@ -19,7 +19,7 @@
         <LoaderComponent />
       </div>
 
-      <div class="flex flex-col items-center" v-else>
+      <div class="flex flex-col" v-else>
         <div
           class="columns is-multiline"
           style="padding-top:40px"
@@ -47,7 +47,7 @@
           </div>
         </div>
 
-        <div class="h-auto" v-else>
+        <div class="h-auto flex justify-center items-center" v-else>
           <NoActorPlaceholder :canAddActor="canAddActor" />
         </div>
       </div>
