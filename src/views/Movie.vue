@@ -54,7 +54,13 @@
             >
               <div
                 class="movie-card"
-                :style="{ 'background-image': 'url(' + movie.image_url + ')' }"
+                :style="{
+                  'background-image': `url(${
+                    movie.image_url
+                      ? movie.image_url
+                      : 'https://st3.depositphotos.com/23594922/31822/v/600/depositphotos_318221368-stock-illustration-missing-picture-page-for-website.jpg'
+                  })`,
+                }"
               ></div>
             </b-tooltip>
             <p class="pt-4 title">{{ movie.title }}</p>

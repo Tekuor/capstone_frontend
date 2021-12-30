@@ -54,7 +54,13 @@
             >
               <div
                 class="movie-card"
-                :style="{ 'background-image': 'url(' + actor.image_url + ')' }"
+                :style="{
+                  'background-image': `url(${
+                    actor.image_url
+                      ? actor.image_url
+                      : 'https://st3.depositphotos.com/23594922/31822/v/600/depositphotos_318221368-stock-illustration-missing-picture-page-for-website.jpg'
+                  })`,
+                }"
               ></div>
             </b-tooltip>
             <p class="pt-4 title">{{ actor.name }}</p>
@@ -186,6 +192,10 @@ export default {
   border-radius: 8px;
   width: 160px;
   height: 200px;
+  background-size: auto;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 .movie-card:hover {
