@@ -13,8 +13,13 @@
               <b-input v-model="form.age"></b-input>
             </b-field>
 
-            <b-field horizontal label="Gender" class="pb-6">
-              <b-input v-model="form.gender"></b-input>
+            <b-field horizontal label="Gender" class="pb-6 text-white">
+              <b-radio v-model="form.gender" name="name" native-value="Female">
+                Female
+              </b-radio>
+              <b-radio v-model="form.gender" name="name" native-value="Male">
+                Male
+              </b-radio>
             </b-field>
 
             <b-field horizontal label="About">

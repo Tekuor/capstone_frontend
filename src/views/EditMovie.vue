@@ -79,7 +79,7 @@
                 type="is-add"
                 @click="addRole()"
                 class="add-button"
-                >Add</b-button
+                >Add Role</b-button
               >
             </div>
 
